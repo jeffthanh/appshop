@@ -39,10 +39,7 @@ export default async (req,res) => {
         return res
             .status(400)
             .json(errorJson("400 error","You have entered an invalid email or password."))
-
-
-    const authorization = await signAccessToken(user._id);
-
+    const authorization = await signAccessToken(user._id,user.role,user.email);
     await User.updateOne(
     { email: req.body.email.trim() },
     {

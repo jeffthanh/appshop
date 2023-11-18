@@ -12,11 +12,23 @@ const userSchema =  mongoose.Schema({
     password:{
         type:String,required:true,select:false
     },
-    profileImage:{
+
+    fullname:{
         type: String
     },
-    bio: {
+
+    address:{
         type: String
+    },
+    image:{
+        type: String
+    },
+    phone: {
+        type: String
+    },
+    role: {
+        type: String,
+        default: 'user',
     },
     lastLogin: {
         type: Date,

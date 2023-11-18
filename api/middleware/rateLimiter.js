@@ -15,7 +15,7 @@ const mongoConn = mongoose.createConnection(process.env.DB,mongoOpts);
 const opts = {
     storeClient:mongoConn,
     tableName:'rateLimits',
-    points: 200,
+    points: 1000,
     duration:60
 }
 

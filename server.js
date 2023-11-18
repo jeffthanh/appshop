@@ -1,10 +1,9 @@
 import express from 'express';
-import morgan from 'morgan';
 import { db } from './api/middleware/db.js';
-import errorJson from './utils/error.js';
 import rateLimiter from './api/middleware/rateLimiter.js';
 import Routes from './api/routes/index.js';
-import path from 'path';
+import cors from 'cors';
+
 import * as dotenv from 'dotenv'
 dotenv.config()
 
@@ -19,8 +18,10 @@ process.on('unhandledRejection', (ex) => {
 });
 
 const PORT = process.env.port || 3000;
-
-app.use(morgan('dev'));
+app.use(cors({
+	origin: process.env.CLIENT_URL,
+	methods:['POST', 'PUT' , 'DELETE', 'GET']
+}))
 app.use(rateLimiter);
 
 app.use(express.json());
@@ -67,11 +68,5 @@ app.use((req, res, next) => {
 });
 
 
-
-app.get('/resetPassword/:token/', (req,res) => {
-	const __dirname = path.dirname(new URL(import.meta.url).pathname);
-
-	res.sendFile(path.join(__dirname+'/resetPass.html'));
-})
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
